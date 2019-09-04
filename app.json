@@ -6,7 +6,10 @@
     "pages/authorize/index",
     "pages/webview/index",
     "pages/user/index",
-    "pages/about/index"
+    "pages/about/index",
+    "pages/category/index",
+    "pages/exam/index",
+    "pages/practice/index"
   ],
   "window": {
     "navigationBarTitleText": "知晓学堂",

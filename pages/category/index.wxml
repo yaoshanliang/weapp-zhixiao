@@ -1,0 +1,38 @@
+<!--pages/category/category.wxml-->
+<view class="start-page">
+    <view class="header">
+        <view class="loading" wx:if="{{loading}}">
+            <image class="lad-img" src="../../images/jkt/loading.png"></image>
+            <text>{{cattext}}</text>
+        </view>
+        <view class="text" wx:if="{{!loading}}">
+            <view style="font-size:40rpx;margin-bottom:60rpx;">欢迎使用，请选择题库</view>
+            <view class="ok-wrap">
+                <image class="ok-img" src="../../images/ok.png"></image>
+                <text>已为您更新至最新题库</text>
+            </view>
+            <view>题目总数：{{count}}题</view>
+        </view>
+        <image src="https://upload-images.jianshu.io/upload_images/6673460-bc716a04d5f6091c.png" style="width:750rpx;height:280rpx;background:#1bd0ad;"></image>
+    </view>
+    <view class="papers">
+        <view class="papers-view">
+          <view class="drive" style="margin-top:15px;">
+            <view class="drive-wrap">
+                    <view bindtap="cardSelect" class="dl" data-cateid="{{driveName.id}}" data-name="{{driveName.name}}" data-number="{{driveName.number}}" data-time="{{driveName.time}}" wx:for="{{cateList}}" wx:for-index="driveInd" wx:for-item="driveName" wx:key="drive">
+                        <view class="dt">
+                            <image class="active" src="{{driveName.pic_url}}"></image>
+                            <image class="selected" src="../../images/selected.png" wx:if="{{driveName.id == selectedCate}}"></image>
+                        </view>
+                        <view class="dd">
+                            <view>{{driveName.name}}</view>
+                        </view>
+                    </view>
+                </view>
+          </view>
+        </view>
+    </view>
+    <view style="height:65px;"></view>
+    <view bindtap="clickOver" class="footer">完成</view>
+</view>
+<view style="position: fixed;width: 65%;height: auto;background: rgba(0, 0, 0, .5);color: #fff;text-align: center;border-radius: 5px;line-height: 30px;left:20%;top:50%;font-size:16px;" wx:if="{{zzzToast.show}}">{{zzzToast.title}}</view>

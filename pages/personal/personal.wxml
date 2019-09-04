@@ -1,0 +1,35 @@
+<view class="center-wrap topBG">
+    <image class="topImage" src="https://bmob-cdn-24322.bmobcloud.com/2019/05/27/3cb30f6c407826b2806965251bd6dc60.png"></image>
+    <button hover-class='none'>
+        <view class="header">
+            <view class="header-left">
+                <view class="name">
+                    <view>{{userInfo.nickName}}</view>
+                </view>
+            </view>
+            <view class="header-right">
+                <image src="{{userInfo.avatarUrl}}"></image>
+            </view>
+        </view>
+    </button>
+    <view class="cell-list">
+        <view bindtap="go_view" class="cell" data-viewInd="{{index}}" wx:for="{{cellList}}" wx:key="{{index}}">
+        <view class="cell-left">
+          <view class="cell-icon">
+            <image src="{{item.icon}}"></image>
+          </view>
+          <view class="cell-text">
+            <text wx:if="{{item.title!='分享好友'}}">{{item.title}}</text>
+            <button openType="share" style="width:150%" wx:if="{{item.title=='分享好友'}}">{{item.title}}</button>
+          </view>
+        </view>
+        <view class="cell-right">
+          <image src="/images/jkt/right.png"></image>
+        </view>
+    </view>
+    </view>
+</view>
+<view bindtap="torem" class="hidden-entrance"></view>
+<passport-refer bindmyevent="_passport_login" lsjShow="{{passportLogin}}" toPhone="{{toPhone}}" wx:if="{{passportLogin}}"></passport-refer>
+<confirm-reply alertShow="{{confirmReplyShow}}" bindmyevent="_confirm_reply" userInfo="{{userInfo}}"></confirm-reply>
+<tarbar-change tarbarShow="{{tarbarShow}}"></tarbar-change>
