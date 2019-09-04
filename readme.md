@@ -1,6 +1,6 @@
-# 微信小程序开箱即用
+# 知晓学堂
 
-## 说明
+## 功能
 与[laravel](https://github.com/yaoshanliang/laravel)框架打通
 
  * 授权、登录
@@ -9,7 +9,7 @@
  * 关于
 
 ## 访问
- * 微信小程序搜索“**知晓程序**”
+ * 微信小程序搜索“**知晓学堂**”
 
  * 扫码访问
  
@@ -22,4 +22,4 @@
 
 ## 安装
 
-    git clone https://github.com/yaoshanliang/weapp.git
+    git clone https://github.com/yaoshanliang/weapp-zhixiao.git

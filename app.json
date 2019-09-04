@@ -8,7 +8,7 @@
     "pages/about/index"
   ],
   "window": {
-    "navigationBarTitleText": "weapp",
+    "navigationBarTitleText": "知晓学堂",
     "navigationBarBackgroundColor": "#1bd0ad",
     "navigationBarTextStyle": "white"
   },
