@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/start/index",
     "pages/home/index",
     "pages/my/index",
     "pages/authorize/index",
@@ -11,23 +12,6 @@
     "navigationBarTitleText": "知晓学堂",
     "navigationBarBackgroundColor": "#1bd0ad",
     "navigationBarTextStyle": "white"
-  },
-  "tabBar": {
-    "selectedColor": "#1bd0ad",
-    "list": [
-      {
-        "pagePath": "pages/home/index",
-        "text": "首页",
-        "iconPath": "/resources/images/home.png",
-        "selectedIconPath": "/resources/images/homeActive.png"
-      },
-      {
-        "pagePath": "pages/my/index",
-        "text": "我的",
-        "iconPath": "/resources/images/my.png",
-        "selectedIconPath": "/resources/images/myActive.png"
-      }
-    ]
   },
   "permission": {
     "scope.userLocation": {
