@@ -1,0 +1,43 @@
+<view class="start-page">
+  <view class="header">
+    <view class="loading" wx:if="{{loading}}">
+      <image class="lad-img" src="/images/jkt/loading.png"></image>
+      <text>{{cattext}}</text>
+    </view>
+    <view class="text" wx:if="{{!loading}}">
+      <view style="font-size:40rpx;margin-bottom:60rpx;">欢迎使用，请选择题库</view>
+      <view class="ok-wrap">
+        <image class="ok-img" src="/images/ok.png"></image>
+        <text>已为您更新至最新题库</text>
+      </view>
+      <!-- <view>题目总数：{{count}}题</view> -->
+    </view>
+    <image src="/images/top-bg.png" style="width:750rpx;height:280rpx;background:#1bd0ad;"></image>
+  </view>
+  <view class="papers">
+    <view class="papers-view">
+      <view class="drive">
+        <view class="drive-wrap">
+          <van-collapse value="{{activeSubject}}" bind:change="onChangeCollapse">
+            <view wx:for="{{subjectList}}" wx:key="subjectList">
+              <van-collapse-item title="{{item.name}}" name="{{item.name}}">
+                <view wx:for="{{item.list}}" wx:for-item="item2" wx:key="1">
+                  <van-radio-group value="{{selectSubjectId}}">
+                    <van-cell title="{{item2.subject_name}}" value-class="value-class" data-id="{{item2.id}}" data-name="{{item2.subject_name}}"bind:click="onChangeSubject">
+                      <van-radio name="{{item2.id}}" checked-color="#1bd0ad" />
+                    </van-cell>
+                  </van-radio-group>
+                </view>
+              </van-collapse-item>
+            </view>
+
+          </van-collapse>
+
+        </view>
+      </view>
+    </view>
+  </view>
+  <view style="height:65px;"></view>
+  <view bindtap="onChooseSubject" class="footer">完成</view>
+</view>
+<view style="position: fixed;width: 65%;height: auto;background: rgba(0, 0, 0, .5);color: #fff;text-align: center;border-radius: 5px;line-height: 30px;left:20%;top:50%;font-size:16px;" wx:if="{{zzzToast.show}}">{{zzzToast.title}}</view>

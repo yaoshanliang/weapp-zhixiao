@@ -185,9 +185,9 @@
 }
 
 .drive-wrap {
-    margin-left: 10px;
-    margin-right: 10px;
-    display: flex;
+    /* margin-left: 10px;ss
+    margin-right: 10px; */
+    /* display: flex; */
     justify-content: space-between;
     font-size: 12px;
     flex-wrap: wrap;
@@ -241,4 +241,8 @@
     line-height: 45px;
     font-size: 16px;
     color: #fff;
+}
+
+.value-class {
+  flex: none !important;
 }

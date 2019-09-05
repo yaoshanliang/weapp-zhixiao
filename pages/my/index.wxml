@@ -1,5 +1,5 @@
 <view class="topBG">
-  <image class="topImage" src="/resources/images/top-bg.png"></image>
+  <image class="topImage" src="/images/top-bg.png"></image>
   <view class="userInfo">
     <view class="left">
       <image class="head" src="{{userInfo.avatar}}"></image>

@@ -7,7 +7,7 @@
     "pages/webview/index",
     "pages/user/index",
     "pages/about/index",
-    "pages/category/index",
+    "pages/subject/index",
     "pages/exam/index",
     "pages/practice/index"
   ],
