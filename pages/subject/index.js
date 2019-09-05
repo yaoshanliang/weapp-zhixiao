@@ -1,5 +1,5 @@
 
-import { getSubjects, chooseSubject } from '../../services/question';
+import { getAllSubjects, chooseSubject } from '../../services/subject';
 
 Page({
   data: {
@@ -10,7 +10,7 @@ Page({
   },
 
   onLoad: function (e) {
-    getSubjects().then((res) => {
+    getAllSubjects().then((res) => {
       if (res.code == 0) {
         let activeSubject = [];
         res.data.map((item) => {

@@ -1,10 +1,11 @@
 import { config } from '../../utils/config';
 import { getUserId, setValue, getValue } from '../../utils/common';
 import { login } from '../../services/user';
+import { getMySubject } from '../../services/subject';
 
 Page({
   data: {
-
+    mySubject: ''
   },
   onLoad(options) {
     var t = this;
@@ -45,9 +46,16 @@ Page({
       })
     }
   },
+  onShow(){
+    getMySubject().then((res) => {
+      this.setData({
+        mySubject: res.data.subject_name
+      })
+    })
+  },
   myQuestion: function () {
     wx.navigateTo({
-      url: "../category/category?isFirst=0"
+      url: "/pages/subject/index"
     });
   },
   orderGo: function (t) {

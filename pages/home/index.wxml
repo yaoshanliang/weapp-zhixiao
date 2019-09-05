@@ -93,7 +93,7 @@
                     <text>我的题库</text>
                 </view>
                 <view class="cell-right">
-                    <text>{{cateName}}</text>
+                    <text>{{mySubject}}</text>
                     <image src="/images/right.png"></image>
                 </view>
             </view>

@@ -21,6 +21,23 @@
       "desc": "你的位置信息将用于获取最近的设备"
     }
   },
+  "tabBar": {
+    "selectedColor": "#1bd0ad",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "text": "首页",
+        "iconPath": "/images/home.png",
+        "selectedIconPath": "/images/homeActive.png"
+      },
+      {
+        "pagePath": "pages/my/index",
+        "text": "我的",
+        "iconPath": "/images/my.png",
+        "selectedIconPath": "/images/myActive.png"
+      }
+    ]
+  },
   "debug": true,
   "sitemapLocation": "sitemap.json"
 }

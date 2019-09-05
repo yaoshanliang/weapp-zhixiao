@@ -1,23 +1,23 @@
 import { request } from '../utils/request';
 import { config } from '../utils/config';
 
-export function getSubjects(param) {
+export function getAllSubjects(param) {
   return request({
-    url: config.prefix + 'question/subjects',
+    url: config.prefix + 'subject/getAllSubjects',
     data: param
   });
 }
 
 export function chooseSubject(param) {
   return request({
-    url: config.prefix + 'question/chooseSubject',
+    url: config.prefix + 'subject/chooseSubject',
     data: param
   });
 }
 
 export function getMySubject(param) {
   return request({
-    url: config.prefix + 'question/getMySubject',
+    url: config.prefix + 'subject/getMySubject',
     data: param
   });
 }
