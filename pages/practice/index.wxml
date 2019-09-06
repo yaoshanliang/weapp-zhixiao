@@ -1,4 +1,3 @@
-<!--pages/moni/moni.wxml-->
 <view class="tab-wrap">
     <view class="tab">
         <view bindtap="changeTab" data-textTab="答题模式">

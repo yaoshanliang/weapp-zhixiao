@@ -12,7 +12,7 @@
                         </form>
                     </view>
                 </view>
-                <view bindtap="orderGo" class="center">
+                <view bindtap="goToPractice" class="center">
                     <form bindsubmit="formSubmit_order" reportSubmit="true">
                         <button formType="submit">
                             <view class="progress-bg">
@@ -87,16 +87,26 @@
         </view>
 
         <view class="cell-wrap cell-one">
-            <view bindtap="myQuestion" class="cell">
+            <view bindtap="goToSubject" class="cell">
                 <view class="cell-left">
                     <image src="/images/icon_school.png"></image>
-                    <text>我的题库</text>
+                    <text>我的学习</text>
                 </view>
                 <view class="cell-right">
                     <text>{{mySubject}}</text>
                     <image src="/images/right.png"></image>
                 </view>
             </view>
+
+            <van-collapse value="{{activeCollapse}}" bind:change="onChangeCollapse">
+            <view wx:for="{{myModules}}" wx:key="2">
+              <van-collapse-item title="{{item.name}}" name="{{item.name}}">
+                <view wx:for="{{item.list}}" wx:for-item="item2" wx:key="1">
+                  <van-cell title="{{item2.module_name}}" is-link value="1/1000"  url="/pages/practice/index?subjectCode={{item2.subject_code}}&moduleCode={{item2.module_code}}"/>
+                </view>
+              </van-collapse-item>
+            </view>
+          </van-collapse>
         </view>
         <view class="cell-wrap" style="margin-bottom:88rpx;"></view>
     </view>

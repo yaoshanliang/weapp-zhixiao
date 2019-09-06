@@ -1,4 +1,4 @@
-var q = require("../../utils/question.js"), n = "random", r = "exam", s = 1, app = getApp();
+
 Page({
 
   data: {

@@ -1,11 +1,5 @@
-// pages/moni/moni.js
-var r = "",
-    a = require("../../utils/underscore-min.js"),
-    question = require('../../utils/question.js'),
-    s = 1,
-    d = [],
-    n = "",
-    i = [];
+import { getQuestions } from '../../services/question';
+
 Page({
 
   data: {
@@ -41,8 +35,17 @@ Page({
     starshow: !1,
   },
 
-  onLoad: function (t) {
-    r = "",this.init_play(t)
+  onLoad: function (options) {
+    console.log(options);
+    getQuestions({
+      subjectCode: options.subjectCode,
+      moduleCode: options.moduleCode,
+      
+    }).then((res) => {
+      if (res.code == 0) {
+
+      }
+    })
   },
 
   onReady: function () {

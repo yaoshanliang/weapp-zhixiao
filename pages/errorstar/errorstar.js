@@ -1,8 +1,4 @@
-var t = require("../../utils/question.js"),
-  e = [],
-  a = "",
-  r = "",
-  s = "";
+
 Page({
 
   data: {

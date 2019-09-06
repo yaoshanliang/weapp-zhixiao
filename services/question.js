@@ -1,9 +1,9 @@
 import { request } from '../utils/request';
 import { config } from '../utils/config';
 
-export function getSubjects(param) {
+export function getQuestions(param) {
   return request({
-    url: config.prefix + 'question/subjects',
+    url: config.prefix + 'question/getQuestions',
     data: param
   });
 }
