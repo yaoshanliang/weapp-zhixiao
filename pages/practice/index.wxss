@@ -192,15 +192,17 @@ page {
 
 .answer-title {
     padding-top: 30rpx;
-    padding-right: 35rpx;
+    padding-left: 28rpx;
+    padding-right: 28rpx;
     position: relative;
     padding-bottom: 35rpx;
+    text-align:justify;
 }
 
 .answer-title view {
     font-size: 32rpx;
-    margin-left: 25rpx;
-    text-indent: 40px;
+    /* margin-left: 25rpx; */
+    /* text-indent: 40px; */
     line-height: 54rpx;
 }
 
@@ -539,4 +541,16 @@ page {
 
 .zan-dialog--show .zan-dialog__mask {
     display: block;
+}
+
+.tag {
+  /* margin-left: -5rpx !important; */
+  margin-right: 10rpx;
+  /* width: 20rpx; */
+  background-color: #1bd0ad;
+  padding-left: 10rpx;
+  padding-right: 10rpx;
+  color: #fff;
+  display: inline-block;
+  line-height: 24rpx;
 }

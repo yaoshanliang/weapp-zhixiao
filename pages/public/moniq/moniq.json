@@ -1,1 +1,5 @@
-{}
+{
+  "usingComponents": {
+    "van-tag": "vant-weapp/tag/index"
+  }
+}

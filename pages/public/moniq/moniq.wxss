@@ -224,3 +224,10 @@ button::after {
     border-top: 20rpx solid #f5f6f7;
     padding-bottom: 30%;
 }
+
+.tag {
+  padding: 5px;
+  width: 20rpx;
+  background-color: #1bd0ad;
+  display: inline-block;
+}

@@ -33,6 +33,10 @@ Page({
     cateName:"",
     mode:'',
     starshow: !1,
+
+    questionCount: 0,
+    questionList: [],
+    myAnswer: {}
   },
 
   onLoad: function (options) {
@@ -40,10 +44,13 @@ Page({
     getQuestions({
       subjectCode: options.subjectCode,
       moduleCode: options.moduleCode,
-      
     }).then((res) => {
       if (res.code == 0) {
-
+        this.setData({
+          questionCount: res.data.count,
+          questionList: res.data.list,
+          myAnswer: res.data.myAnswer
+        })
       }
     })
   },
@@ -257,103 +264,117 @@ Page({
   touchstart: function (t) { },
   bindtouchmove: function (t) { },
   bindtouchend: function (t) { },
-  selectAnswer: function (t) {
-    function a(){
-      if (o = e.data.idarr[i], i < e.data.idarr.length - 1) {
-        if ("green" != e.data.orderPX[o] && "red" != e.data.orderPX[o]) {
-          wx.setStorage({
-            key: n + "ind" + s,
-            data: i
-          });
-          var t = e.data.orderPX;
-          for (var r in t) "blue" == t[r] && (t[r] = "");
-          return t[o] = "blue", e.setData({
-            orderPX: t
-          }), void console.log(e.data.orderPX);
-        }
-        i++ , a();
-      } else wx.setStorage({
-        key: n + "ind" + s,
-        data: e.data.idarr.length - 1
-      });
-    }
+  selectAnswer: function (event) {
+    console.log(event);
+    let questionId = event.currentTarget.dataset.id;
+    let answer = event.currentTarget.dataset.answer;
+    let option = event.currentTarget.dataset.option;
+    let myAnswer = this.data.myAnswer;
+    myAnswer[questionId] = option;
+    this.setData({
+      myAnswer
+    })
+    console.log(this.data.myAnswer);
+    // if (answer == option) {
+    //   myAnswer[questionId] = 
+    // }
 
-    var e = this,
-      i = e.data.indexInd + 1,
-      o = e.data.idarr[i];
-    console.log(e.data.orderPX)
-    if (a(), "背题模式" != e.data.textTab) {
-      console.log(d)
-      var u = d,
-        l = e.data.questions;
-      if (e.data.StorageAll[e.data.idarr[e.data.indexInd]]) l[e.data.current].order = e.data.StorageAll[e.data.idarr[e.data.indexInd]],
-        e.setData({
-          questions: l
-        });
-      else {
-        console.log('eee')
-        u[e.data.indexInd].textTab = e.data.textTab, u[e.data.indexInd].order = {
-          after: 0,
-          down: t.currentTarget.dataset.ind,
-          answer: t.currentTarget.dataset.answer
-        }, l[e.data.current].textTab = e.data.textTab, l[e.data.current].order = {
-          after: 0,
-          down: t.currentTarget.dataset.ind,
-          answer: t.currentTarget.dataset.answer
-        }, d = u, e.setData({
-          questions: l
-        });
-        var c = e.data.StorageAll;
-        console.log(c)
-        c[t.currentTarget.dataset.id] = {
-          after: 0,
-          down: t.currentTarget.dataset.ind,
-          answer: t.currentTarget.dataset.answer
-        }, wx.setStorage({
-          key: n + "" + s,
-          data: c,
-        }), e.setData({
-          StorageAll: c
-        });
-        var g = e.data.allNum
-        if (g++ , t.currentTarget.dataset.ind == t.currentTarget.dataset.answer) {
-          var v = e.data.orderPX
-          v[t.currentTarget.dataset.id] = "green", v.all = g, wx.setStorage({
-            key: n + "list" + s,
-            data: v
-          });
-          var h = e.data.greenNum;
-          if (h++ , e.setData({
-            greenNum: h
-          }), e.data.indexInd < d.length - 1) {
-            e.autoPlay();
-            var x = e.data.everyDay_all;
-            x++ , e.setData({
-              everyDay_all: x
-            })
-          }
-        } else if (t.currentTarget.dataset.ind != t.currentTarget.dataset.answer) {
-          getApp().setIdsStroage("errorids", s, "1", l[e.data.current].question_id.toString())
-          var v = e.data.orderPX;
-          v[t.currentTarget.dataset.id] = "red", v.all = g, wx.setStorage({
-            key: n + "list" + s,
-            data: v
-          });
-          var f = e.data.redNum;
-          f++ , e.setData({
-            redNum: f
-          });
-          var p = e.data.everyDay_error;
-          r += "," + t.currentTarget.dataset.id;
-          var x = e.data.everyDay_all;
-          p++ , x++ , e.setData({
-            everyDay_error: p,
-            everyDay_all: x
-          });
-        }
-        e.questionStatus();
-      }
-    }
+    // function a(){
+    //   if (o = e.data.idarr[i], i < e.data.idarr.length - 1) {
+    //     if ("green" != e.data.orderPX[o] && "red" != e.data.orderPX[o]) {
+    //       wx.setStorage({
+    //         key: n + "ind" + s,
+    //         data: i
+    //       });
+    //       var t = e.data.orderPX;
+    //       for (var r in t) "blue" == t[r] && (t[r] = "");
+    //       return t[o] = "blue", e.setData({
+    //         orderPX: t
+    //       }), void console.log(e.data.orderPX);
+    //     }
+    //     i++ , a();
+    //   } else wx.setStorage({
+    //     key: n + "ind" + s,
+    //     data: e.data.idarr.length - 1
+    //   });
+    // }
+
+    // var e = this,
+    //   i = e.data.indexInd + 1,
+    //   o = e.data.idarr[i];
+    // console.log(e.data.orderPX)
+    // if (a(), "背题模式" != e.data.textTab) {
+    //   console.log(d)
+    //   var u = d,
+    //     l = e.data.questions;
+    //   if (e.data.StorageAll[e.data.idarr[e.data.indexInd]]) l[e.data.current].order = e.data.StorageAll[e.data.idarr[e.data.indexInd]],
+    //     e.setData({
+    //       questions: l
+    //     });
+    //   else {
+    //     console.log('eee')
+    //     u[e.data.indexInd].textTab = e.data.textTab, u[e.data.indexInd].order = {
+    //       after: 0,
+    //       down: t.currentTarget.dataset.ind,
+    //       answer: t.currentTarget.dataset.answer
+    //     }, l[e.data.current].textTab = e.data.textTab, l[e.data.current].order = {
+    //       after: 0,
+    //       down: t.currentTarget.dataset.ind,
+    //       answer: t.currentTarget.dataset.answer
+    //     }, d = u, e.setData({
+    //       questions: l
+    //     });
+    //     var c = e.data.StorageAll;
+    //     console.log(c)
+    //     c[t.currentTarget.dataset.id] = {
+    //       after: 0,
+    //       down: t.currentTarget.dataset.ind,
+    //       answer: t.currentTarget.dataset.answer
+    //     }, wx.setStorage({
+    //       key: n + "" + s,
+    //       data: c,
+    //     }), e.setData({
+    //       StorageAll: c
+    //     });
+    //     var g = e.data.allNum
+    //     if (g++ , t.currentTarget.dataset.ind == t.currentTarget.dataset.answer) {
+    //       var v = e.data.orderPX
+    //       v[t.currentTarget.dataset.id] = "green", v.all = g, wx.setStorage({
+    //         key: n + "list" + s,
+    //         data: v
+    //       });
+    //       var h = e.data.greenNum;
+    //       if (h++ , e.setData({
+    //         greenNum: h
+    //       }), e.data.indexInd < d.length - 1) {
+    //         e.autoPlay();
+    //         var x = e.data.everyDay_all;
+    //         x++ , e.setData({
+    //           everyDay_all: x
+    //         })
+    //       }
+    //     } else if (t.currentTarget.dataset.ind != t.currentTarget.dataset.answer) {
+    //       getApp().setIdsStroage("errorids", s, "1", l[e.data.current].question_id.toString())
+    //       var v = e.data.orderPX;
+    //       v[t.currentTarget.dataset.id] = "red", v.all = g, wx.setStorage({
+    //         key: n + "list" + s,
+    //         data: v
+    //       });
+    //       var f = e.data.redNum;
+    //       f++ , e.setData({
+    //         redNum: f
+    //       });
+    //       var p = e.data.everyDay_error;
+    //       r += "," + t.currentTarget.dataset.id;
+    //       var x = e.data.everyDay_all;
+    //       p++ , x++ , e.setData({
+    //         everyDay_error: p,
+    //         everyDay_all: x
+    //       });
+    //     }
+    //     e.questionStatus();
+    //   }
+    // }
   },
   selectAnswerMore:function(t){
     var a = this;

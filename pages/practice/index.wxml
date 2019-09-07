@@ -16,8 +16,8 @@
 <import src="../public/moniq/moniq.wxml"></import>
 <view class="page">
   <swiper autoplay="{{autoplay}}" bindchange="pageChange" circular="{{xiejie}}" class="{{videoMedia&&videoctrl?'flexauto':'noflex'}}" current="{{current}}" duration="500" indicatorDots="{{false}}" interval="{{interval}}" wx:if="{{!iconIndtwo}}">
-    <swiper-item wx:for="{{questions}}" wx:for-item="downContent" wx:key="key">
-        <template is="answer" data="{{downContent:downContent,textTab:textTab,videoctrl:videoctrl,testMode:testMode}}"></template>
+    <swiper-item wx:for="{{questionList}}" wx:for-item="question" wx:key="key">
+        <template is="answer" data="{{question:question,myAnswer: myAnswer, textTab:textTab,videoctrl:videoctrl,testMode:testMode}}"></template>
     </swiper-item>
   </swiper>
 </view>
@@ -35,7 +35,7 @@
             </view>
             <view>
                 <image src="/images/q_answer_sheet_number.png"></image>
-                <text>{{indexInd*1+1}}/{{idarr.length}}</text>
+                <text>{{indexInd*1+1}}/{{questionCount}}</text>
             </view>
         </view>
         <view bindtap="starcollect" class="h-right" wx:if="{{!iconInd}}">
