@@ -15,14 +15,14 @@
         <view class="answer-select">
           <view bindtap="selectAnswer" class="direction" data-answer="{{question.answer}}" data-id="{{question.id}}" data-option="{{option.key}}" wx:for="{{question.options}}" wx:for-index="index" wx:for-item="option" wx:key="index">
             <view class="answer-left">
-              <text class="option" wx:if="{{ myAnswer[question.id] != option.key}}">{{option.key}}</text>
+              <text class="option" wx:if="{{ myAnswer[question.id] == '' || (option.key != question.answer && option.key != myAnswer[question.id]) }}">{{option.key}}</text>
               <image src="/images/error.png" wx:if="{{ myAnswer[question.id] != question.answer && myAnswer[question.id] == option.key}}"></image>
-              <image src="/images/success.png" wx:if="{{ myAnswer[question.id] == question.answer && myAnswer[question.id] == option.key}}"></image>
+              <image src="/images/success.png" wx:if="{{ myAnswer[question.id] != '' && question.answer == option.key}}"></image>
             </view>
             <view class="answer-right">
-              <text class="text" wx:if="{{myAnswer[question.id] != option.key}}">{{option.value}}</text>
+              <text class="text" wx:if="{{ myAnswer[question.id] == '' || (option.key != question.answer && option.key != myAnswer[question.id]) }}">{{option.value}}</text>
               <text class="red-active" wx:if="{{myAnswer[question.id] != question.answer && myAnswer[question.id] == option.key}}">{{option.value}}</text>
-              <text class="green-active" wx:if="{{ myAnswer[question.id] == question.answer && myAnswer[question.id] == option.key}}">{{option.value}}</text>
+              <text class="green-active" wx:if="{{ myAnswer[question.id] != '' && question.answer == option.key}}">{{option.value}}</text>
             </view>
           </view>
         </view>

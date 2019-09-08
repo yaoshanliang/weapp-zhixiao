@@ -27,15 +27,15 @@
         <view bindtap="_updown" class="h-left">
             <view>
                 <image src="/images/q_answer_sheet_right.png"></image>
-                <text style="color:#33c500">{{greenNum}}</text>
+                <text style="color:#33c500">{{correctNum}}</text>
             </view>
             <view>
                 <image src="/images/q_answer_sheet_wrong.png"></image>
-                <text style="color:#ff3030">{{redNum}}</text>
+                <text style="color:#ff3030">{{errorNum}}</text>
             </view>
             <view>
                 <image src="/images/q_answer_sheet_number.png"></image>
-                <text>{{indexInd*1+1}}/{{questionCount}}</text>
+                <text>{{current+1}} / {{questionCount}}</text>
             </view>
         </view>
         <view bindtap="starcollect" class="h-right" wx:if="{{!iconInd}}">
@@ -51,7 +51,7 @@
         <scroll-view scrollY bindscroll="viewscroll" scrollTop="{{scrolltop}}" style="height: 100%">
             <view class="icon-circle {{iconInd?'showzh-active':'showzh'}}" wx:if="{{iconInd}}" wx:for="{{iconcircle}}" wx:for-index="idx1" wx:for-item="itemName1" wx:key="key">
                 <view class="circle-wrap">
-                    <view bindtap="jumpToQuestion" data-color="{{orderPX[itemName2]}}" data-id="{{itemName2}}" data-index="{{itemName1.len+idx2}}" wx:if="{{orderPX[itemName2]!=true}}" wx:for="{{itemName1.question_ids}}" wx:for-index="idx2" wx:for-item="itemName2" wx:key="key2">
+                    <view bindtap="jumpToQuestion" data-color="{{orderPX[itemName2]}}" data-id="{{itemName2}}" data-index="{{itemName1.len+idx2}}" wx:if="{{orderPX[itemName2]!=true}}" wx:for="{{i}}" wx:for-index="idx2" wx:for-item="itemName2" wx:key="key2">
                         <view class="now" wx:if="{{orderPX[itemName2]!='red'&&orderPX[itemName2]!='green'&&orderPX[itemName2]!='blue'}}">{{itemName1.len+idx2+1}}</view>
                         <view class="red" wx:if="{{orderPX[itemName2]=='red'}}">{{itemName1.len+idx2+1}}</view>
                         <view class="green" wx:if="{{orderPX[itemName2]=='green'}}">{{itemName1.len+idx2+1}}</view>

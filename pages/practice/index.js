@@ -11,7 +11,6 @@ Page({
     iconInd: !1,
     iconIndtwo: !1,
     indexInd: 0,
-    current: 0,
     textTab: "答题模式",
     selectInd: !0,
     testMode: !1,
@@ -36,7 +35,11 @@ Page({
 
     questionCount: 0,
     questionList: [],
-    myAnswer: {}
+    myAnswer: {},
+    current: 0,
+    correctNum: 0,
+    errorNum: 0
+
   },
 
   onLoad: function (options) {
@@ -264,20 +267,39 @@ Page({
   touchstart: function (t) { },
   bindtouchmove: function (t) { },
   bindtouchend: function (t) { },
+
+  // 选中选项
   selectAnswer: function (event) {
     console.log(event);
     let questionId = event.currentTarget.dataset.id;
     let answer = event.currentTarget.dataset.answer;
     let option = event.currentTarget.dataset.option;
     let myAnswer = this.data.myAnswer;
-    myAnswer[questionId] = option;
-    this.setData({
-      myAnswer
-    })
+
+    // 还未作答过
+    if (myAnswer[questionId] == '') {
+      myAnswer[questionId] = option;
+      let t = this;
+      this.setData({
+        myAnswer
+      }), setTimeout(function () {
+        if (answer == option) {
+          // 跳转下一题
+          t.setData({
+            current: t.data.current + 1,
+            correctNum: t.data.correctNum +1
+          })
+        } else {
+          // 记录错误
+          t.setData({
+            errorNum: t.data.errorNum + 1
+          })
+        }
+      }, 300);
+    }
+    
     console.log(this.data.myAnswer);
-    // if (answer == option) {
-    //   myAnswer[questionId] = 
-    // }
+    
 
     // function a(){
     //   if (o = e.data.idarr[i], i < e.data.idarr.length - 1) {
@@ -511,57 +533,66 @@ Page({
       autoplay: !0
     });
   },
-  pageChange:function(t){
-    console.log(t)
-    "autoplay" == t.detail.source && this.setData({
-      autoplay: !1
-    });
-    var a = this;
-    a.setData({
-      moreArr: {
-        A: !1,
-        B: !1,
-        C: !1,
-        D: !1
-      }
-    }), a.setData({
-      xiejie: !0
-    });
 
-    var e = this.data.current,
-      r = t.detail.current,
-      n = a.data.indexInd,
-      i = 1 * r - 1 * e;
-    console.log(i)
-    if (-2 == i ? i = 1 : 2 == i && (i = -1), (n += i) >= d.length)
-      return n = 0, a.result(0),
-        void a.setData({
-          xiejie: !1,
-          current: 2
-        });
-    if (n < 0) return wx.showToast({
-      title: "已经是第一题了"
-    }), a.setData({
-      xiejie: !1,
-      current: 0
-    }), void (n = d.length - 1);
-    console.log("%s", "last: ", e, " current: ", r, " index: ", n, " page:", d[n]);
-    var o = [];
-    0 == r ? (o.push(d[n]), o.push(d[n + 1]), o.push(d[n - 1]), o[1] || (o[1] = d[0]),
-      o[2] || (o[2] = d[d.length - 1])) : 1 == r ? (o.push(d[n - 1]), o.push(d[n]), o.push(d[n + 1]),
-        o[2] || (o[2] = d[0]), o[0] || (o[0] = d[d.length - 1])) : 2 == r && (o.push(d[n + 1]),
-          o.push(d[n - 1]), o.push(d[n]), o[0] || (o[0] = d[0]), o[1] || (o[1] = d[d.length - 1])),
-      console.log(o)
+  // 翻页
+  pageChange:function(event) {
+    console.log(event);
     this.setData({
-      questions: o,
-      indexInd: n,
-      current: r
-    }), getApp().saveInfo("starids", s, d[n].question_id.toString()), setTimeout(function () {
-      a.setData({
-        starshow: getApp().info
-      });
-    }, 300)
+      current: event.detail.current
+    })
+
+    // console.log(t)
+    // "autoplay" == t.detail.source && this.setData({
+    //   autoplay: !1
+    // });
+    // var a = this;
+    // a.setData({
+    //   moreArr: {
+    //     A: !1,
+    //     B: !1,
+    //     C: !1,
+    //     D: !1
+    //   }
+    // }), a.setData({
+    //   xiejie: !0
+    // });
+
+    // var e = this.data.current,
+    //   r = t.detail.current,
+    //   n = a.data.indexInd,
+    //   i = 1 * r - 1 * e;
+    // console.log(i)
+    // if (-2 == i ? i = 1 : 2 == i && (i = -1), (n += i) >= d.length)
+    //   return n = 0, a.result(0),
+    //     void a.setData({
+    //       xiejie: !1,
+    //       current: 2
+    //     });
+    // if (n < 0) return wx.showToast({
+    //   title: "已经是第一题了"
+    // }), a.setData({
+    //   xiejie: !1,
+    //   current: 0
+    // }), void (n = d.length - 1);
+    // console.log("%s", "last: ", e, " current: ", r, " index: ", n, " page:", d[n]);
+    // var o = [];
+    // 0 == r ? (o.push(d[n]), o.push(d[n + 1]), o.push(d[n - 1]), o[1] || (o[1] = d[0]),
+    //   o[2] || (o[2] = d[d.length - 1])) : 1 == r ? (o.push(d[n - 1]), o.push(d[n]), o.push(d[n + 1]),
+    //     o[2] || (o[2] = d[0]), o[0] || (o[0] = d[d.length - 1])) : 2 == r && (o.push(d[n + 1]),
+    //       o.push(d[n - 1]), o.push(d[n]), o[0] || (o[0] = d[0]), o[1] || (o[1] = d[d.length - 1])),
+    //   console.log(o)
+    // this.setData({
+    //   questions: o,
+    //   indexInd: n,
+    //   current: r
+    // }), getApp().saveInfo("starids", s, d[n].question_id.toString()), setTimeout(function () {
+    //   a.setData({
+    //     starshow: getApp().info
+    //   });
+    // }, 300)
   },
+
+  // 折叠面板
   _updown: function () {
     var t = this;
     this.setData({
