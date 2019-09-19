@@ -49,7 +49,7 @@
     </view>
     <view bindtouchmove="scrolltop" class="{{iconInd?'wrap-icon-active':'wrap-icon'}}">
         <scroll-view scrollY bindscroll="viewscroll" scrollTop="{{scrolltop}}" style="height: 100%">
-            <view class="icon-circle {{iconInd?'showzh-active':'showzh'}}" wx:if="{{iconInd}}" wx:for="{{iconcircle}}" wx:for-index="idx1" wx:for-item="itemName1" wx:key="key">
+            <view class="icon-circle {{iconInd?'showzh-active':'showzh'}}" wx:if="{{iconInd}}" wx:for="{{myAnswer}}" wx:for-index="idx1" wx:for-item="itemName1" wx:key="key">
                 <view class="circle-wrap">
                     <view bindtap="jumpToQuestion" data-color="{{orderPX[itemName2]}}" data-id="{{itemName2}}" data-index="{{itemName1.len+idx2}}" wx:if="{{orderPX[itemName2]!=true}}" wx:for="{{i}}" wx:for-index="idx2" wx:for-item="itemName2" wx:key="key2">
                         <view class="now" wx:if="{{orderPX[itemName2]!='red'&&orderPX[itemName2]!='green'&&orderPX[itemName2]!='blue'}}">{{itemName1.len+idx2+1}}</view>

@@ -1,11 +1,11 @@
 
-import { getAllSubjects, chooseSubject } from '../../services/subject';
+import { getAllSubjects, chooseSubject, getMySubject } from '../../services/subject';
 
 Page({
   data: {
     subjectList: [],
     activeSubject: [],
-    selectSubjectId: '',
+    selectSubjectCode: '',
     selectSubjectName: ''
   },
 
@@ -22,6 +22,14 @@ Page({
         })
       }
     })
+    getMySubject().then((res) => {
+      if (res.code === 0) {
+        this.setData({
+          selectSubjectCode: res.data.subject_code,
+        })
+      }
+      
+    })
   },
   onChangeCollapse(event) {
     this.setData({
@@ -31,14 +39,14 @@ Page({
   onChangeSubject(event) {
     console.log(event);
     this.setData({
-      selectSubjectId: "" + event.target.dataset.id,
+      selectSubjectCode: "" + event.target.dataset.code,
       selectSubjectName: "" + event.target.dataset.name
     });
   },
 
   onChooseSubject() {
     chooseSubject({
-      subjectId: this.data.selectSubjectId,
+      subjectCode: this.data.selectSubjectCode,
       subjectName: this.data.selectSubjectName
     }).then((res) => {
       if (res.code == 0) {

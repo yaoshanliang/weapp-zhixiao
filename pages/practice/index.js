@@ -1,4 +1,5 @@
 import { getQuestions } from '../../services/question';
+import { getValue, setValue, addValueFromArray, removeValueFromArray } from '../../utils/common';
 
 Page({
 
@@ -66,11 +67,12 @@ Page({
 
   },
   
+  // 收藏
   starcollect:function(){
     this.setData({
       starshow:!this.data.starshow
-    }), this.data.starshow ? getApp().setIdsStroage("starids", s, "1", this.data.questions[this.data.current].question_id.toString())
-      : getApp().removeids("starids", s, this.data.questions[this.data.current].question_id.toString());
+    }), this.data.starshow ? addValueFromArray('collectedIds', this.data.questionList[this.data.current].id.toString())
+      : removeValueFromArray('collectedIds', this.data.questionList[this.data.current].id.toString());
   },
 
   init_play:function(a){
@@ -599,9 +601,12 @@ Page({
       iconInd: !this.data.iconInd,
       iconIndtwo: !this.data.iconIndtwo
     }), setTimeout(function () {
-      i.length < 2 || t.setData({
-        scrolltop: i[i.length - 2]
-      });
+      t.setData({
+        scrolltop: 100
+      })
+      // i.length < 2 || t.setData({
+      //   scrolltop: i[i.length - 2]
+      // });
     }, 0);
     console.log(this.data.iconInd)
   },

@@ -22,9 +22,9 @@
             <view wx:for="{{subjectList}}" wx:key="subjectList">
               <van-collapse-item title="{{item.name}}" name="{{item.name}}">
                 <view wx:for="{{item.list}}" wx:for-item="item2" wx:key="1">
-                  <van-radio-group value="{{selectSubjectId}}">
-                    <van-cell title="{{item2.subject_name}}" value-class="value-class" data-id="{{item2.id}}" data-name="{{item2.subject_name}}"bind:click="onChangeSubject">
-                      <van-radio name="{{item2.id}}" checked-color="#1bd0ad" />
+                  <van-radio-group value="{{selectSubjectCode}}">
+                    <van-cell title="{{item2.subject_name}}" value-class="value-class" data-code="{{item2.subject_code}}" data-name="{{item2.subject_name}}"bind:click="onChangeSubject">
+                      <van-radio name="{{item2.subject_code}}" checked-color="#1bd0ad" />
                     </van-cell>
                   </van-radio-group>
                 </view>

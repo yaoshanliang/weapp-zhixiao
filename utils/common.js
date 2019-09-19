@@ -54,3 +54,32 @@ export function getValue(key) {
   }
   return '';
 }
+
+// 根据key获取value
+export function addValueFromArray(key, value) {
+  let arr = wx.getStorageSync(env + '_' + key);
+  if (arr.length > 0) {
+    if (arr.indexOf(value) == -1) {
+      arr.push(value);
+    }
+    setValue(key, arr);
+  } else {
+    setValue(key, [value]);
+  }
+  return arr;
+}
+
+// 根据key获取value
+export function removeValueFromArray(key, value) {
+  let arr = wx.getStorageSync(env + '_' + key);
+  if (arr.length > 0) {
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i] == value) {
+        arr.splice(i, 1);
+        break;
+      }
+    }
+    setValue(key, arr)
+  }
+  return arr;
+}
