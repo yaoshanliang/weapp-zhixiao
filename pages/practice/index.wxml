@@ -17,7 +17,7 @@
 <view class="page">
   <swiper autoplay="{{autoplay}}" bindchange="pageChange" circular="{{xiejie}}" class="{{videoMedia&&videoctrl?'flexauto':'noflex'}}" current="{{current}}" duration="500" indicatorDots="{{false}}" interval="{{interval}}" wx:if="{{!iconIndtwo}}">
     <swiper-item wx:for="{{questionList}}" wx:for-item="question" wx:key="key">
-        <template is="answer" data="{{question:question,myAnswer: myAnswer, textTab:textTab,videoctrl:videoctrl,testMode:testMode}}"></template>
+        <template is="answer" data="{{question:question, questionIndex: index, textTab:textTab,videoctrl:videoctrl,testMode:testMode}}"></template>
     </swiper-item>
   </swiper>
 </view>
@@ -49,13 +49,13 @@
     </view>
     <view bindtouchmove="scrolltop" class="{{iconInd?'wrap-icon-active':'wrap-icon'}}">
         <scroll-view scrollY bindscroll="viewscroll" scrollTop="{{scrolltop}}" style="height: 100%">
-            <view class="icon-circle {{iconInd?'showzh-active':'showzh'}}" wx:if="{{iconInd}}" wx:for="{{myAnswer}}" wx:for-index="idx1" wx:for-item="itemName1" wx:key="key">
+            <view class="icon-circle {{iconInd?'showzh-active':'showzh'}}" wx:if="{{iconInd}}" wx:for="{{questionList}}" wx:key="key">
                 <view class="circle-wrap">
-                    <view bindtap="jumpToQuestion" data-color="{{orderPX[itemName2]}}" data-id="{{itemName2}}" data-index="{{itemName1.len+idx2}}" wx:if="{{orderPX[itemName2]!=true}}" wx:for="{{i}}" wx:for-index="idx2" wx:for-item="itemName2" wx:key="key2">
-                        <view class="now" wx:if="{{orderPX[itemName2]!='red'&&orderPX[itemName2]!='green'&&orderPX[itemName2]!='blue'}}">{{itemName1.len+idx2+1}}</view>
-                        <view class="red" wx:if="{{orderPX[itemName2]=='red'}}">{{itemName1.len+idx2+1}}</view>
-                        <view class="green" wx:if="{{orderPX[itemName2]=='green'}}">{{itemName1.len+idx2+1}}</view>
-                        <view class="blue" wx:if="{{orderPX[itemName2]=='blue'}}">{{itemName1.len+idx2+1}}</view>
+                    <view bindtap="jumpToQuestion" data-index="{{index}}">
+                        <view class="now" wx:if="{{current != index && item['myAnswerStatus'] == 0}}">{{index + 1}}</view>
+                        <view class="red" wx:if="{{current != index && item['myAnswerStatus'] == 2}}">{{index + 1}}</view>
+                        <view class="green" wx:if="{{current != index && item['myAnswerStatus'] == 1}}">{{index + 1}}</view>
+                        <view class="blue" wx:if="{{current == index}}">{{index + 1}}</view>
                     </view>
                 </view>
             </view>

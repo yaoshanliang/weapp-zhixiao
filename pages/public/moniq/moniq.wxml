@@ -5,7 +5,7 @@
         <view class="answer-title">
           <view style="width:100%">
             <view class="tag">{{question.type}}</view>
-            <text>{{question.title}}</text>
+            <text>【{{questionIndex + 1}}】{{question.title}}</text>
             <text wx:if="{{testMode}}">{{question.id}} 答案：{{question.answer}}</text>
           </view>
         </view>
@@ -13,20 +13,20 @@
           <image mode="aspectFit" src="{{downContent.media}}" wx:if="{{downContent.media_type=='1'}}"></image>
         </view>
         <view class="answer-select">
-          <view bindtap="selectAnswer" class="direction" data-answer="{{question.answer}}" data-id="{{question.id}}" data-option="{{option.key}}" wx:for="{{question.options}}" wx:for-index="index" wx:for-item="option" wx:key="index">
+          <view bindtap="selectAnswer" class="direction" data-index="{{questionIndex}}" data-answer="{{question.answer}}" data-id="{{question.id}}" data-option="{{option.key}}" wx:for="{{question.options}}" wx:for-index="index" wx:for-item="option" wx:key="index">
             <view class="answer-left">
-              <text class="option" wx:if="{{ myAnswer[question.id] == '' || (option.key != question.answer && option.key != myAnswer[question.id]) }}">{{option.key}}</text>
-              <image src="/images/error.png" wx:if="{{ myAnswer[question.id] != question.answer && myAnswer[question.id] == option.key}}"></image>
-              <image src="/images/success.png" wx:if="{{ myAnswer[question.id] != '' && question.answer == option.key}}"></image>
+              <text class="option" wx:if="{{ question.myAnswerStatus == 0 || (question.answer != option.key && question.myAnswer != option.key) }}">{{option.key}}</text>
+              <image src="/images/error.png" wx:if="{{ question.myAnswerStatus == 2 && question.myAnswer == option.key }}"></image>
+              <image src="/images/success.png" wx:if="{{ question.myAnswerStatus != 0 && question.answer == option.key }}"></image>
             </view>
             <view class="answer-right">
-              <text class="text" wx:if="{{ myAnswer[question.id] == '' || (option.key != question.answer && option.key != myAnswer[question.id]) }}">{{option.value}}</text>
-              <text class="red-active" wx:if="{{myAnswer[question.id] != question.answer && myAnswer[question.id] == option.key}}">{{option.value}}</text>
-              <text class="green-active" wx:if="{{ myAnswer[question.id] != '' && question.answer == option.key}}">{{option.value}}</text>
+              <text class="text" wx:if="{{ question.myAnswerStatus == 0 || (question.answer != option.key && question.myAnswer != option.key) }}">{{option.value}}</text>
+              <text class="red-active" wx:if="{{ question.myAnswerStatus == 2 && question.myAnswer == option.key }}">{{option.value}}</text>
+              <text class="green-active" wx:if="{{ question.myAnswerStatus != 0 && question.answer == option.key }}">{{option.value}}</text>
             </view>
           </view>
         </view>
-        <view class="explantion" wx:if="{{myAnswer[question.id] != ''}}">
+        <view class="explantion" wx:if="{{question.myAnswerStatus != 0}}">
           <view class="explanation-title">
             <view class="explanation-left">解释</view>
           </view>

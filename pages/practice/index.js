@@ -36,7 +36,7 @@ Page({
 
     questionCount: 0,
     questionList: [],
-    myAnswer: {},
+    // myAnswer: {},
     current: 0,
     correctNum: 0,
     errorNum: 0
@@ -53,7 +53,7 @@ Page({
         this.setData({
           questionCount: res.data.count,
           questionList: res.data.list,
-          myAnswer: res.data.myAnswer
+          // myAnswer: res.data.myAnswer
         })
       }
     })
@@ -214,45 +214,54 @@ Page({
       }
     })
   },
-  jumpToQuestion:function(t) {
-    var a = this,
-      e = a.data.orderPX;
-    for (var r in e) "blue" == e[r] && (e[r] = "");
+
+  // 跳转到指定题目
+  jumpToQuestion:function(event) {
+    let index = event.currentTarget.dataset.index;
     this.setData({
-      orderPX: e,
-      iconInd: !1,
-      iconIndtwo: !1,
-      videoctrl: !0
-    });
-    var n = t.currentTarget.dataset.color;
-    console.log(n)
-    if ("red" != n && "green" != n) {
-      var i = a.data.orderPX;
-      i[t.currentTarget.dataset.id] = "blue", a.setData({
-        orderPX: i
-      })
-    }
-    console.log(a.data.orderPX)
-    //a.getListOrder()
-    var o = t.currentTarget.dataset.index;
-    a.data.indexInd = o;
-    var u = [];
-    console.log(d[o])
-    1 == this.data.current ? (a.data.indexInd <= 0 ? u.push(d[d.length - 1]) : u.push(d[a.data.indexInd - 1]),
-      u.push(d[a.data.indexInd]), a.data.indexInd >= d.length - 1 ? u.push(d[0]) : u.push(d[d.length - 1])) : 0 == this.data.current ? (u.push(d[a.data.indexInd]),
-        a.data.indexInd == d.length - 1 ? (u.push(d[0]), u.push(d[1])) : a.data.indexInd == d.length - 2 ? (u.push(d[a.data.indexInd + 1]),
-          u.push(d[0])) : (u.push(d[a.data.indexInd + 1]), u.push(d[a.data.indexInd + 2]))) : (0 == a.data.indexInd ? (u.push(d[d.length - 2]),
-            u.push(d[d.length - 1])) : 1 == a.data.indexInd ? (u.push(d[d.length - 1]), u.push(d[0])) : (u.push(d[a.data.indexInd - 2]),
-              u.push(d[a.data.indexInd - 1])), u.push(d[a.data.indexInd])), this.setData({
-                questions: u,
-                indexInd: o
-              })
-    getApp().saveInfo("starids",s,d[o].question_id.toString()),setTimeout(function() {
-      a.setData({
-        starshow:getApp().info
-      })
-    },500)
-    console.log(u)
+      current: index,
+      iconInd: !this.data.iconInd,
+      iconIndtwo: !this.data.iconIndtwo
+    })
+
+    // var a = this,
+    //   e = a.data.orderPX;
+    // for (var r in e) "blue" == e[r] && (e[r] = "");
+    // this.setData({
+    //   orderPX: e,
+    //   iconInd: !1,
+    //   iconIndtwo: !1,
+    //   videoctrl: !0
+    // });
+    // var n = t.currentTarget.dataset.color;
+    // console.log(n)
+    // if ("red" != n && "green" != n) {
+    //   var i = a.data.orderPX;
+    //   i[t.currentTarget.dataset.id] = "blue", a.setData({
+    //     orderPX: i
+    //   })
+    // }
+    // console.log(a.data.orderPX)
+    // //a.getListOrder()
+    // var o = t.currentTarget.dataset.index;
+    // a.data.indexInd = o;
+    // var u = [];
+    // console.log(d[o])
+    // 1 == this.data.current ? (a.data.indexInd <= 0 ? u.push(d[d.length - 1]) : u.push(d[a.data.indexInd - 1]),
+    //   u.push(d[a.data.indexInd]), a.data.indexInd >= d.length - 1 ? u.push(d[0]) : u.push(d[d.length - 1])) : 0 == this.data.current ? (u.push(d[a.data.indexInd]),
+    //     a.data.indexInd == d.length - 1 ? (u.push(d[0]), u.push(d[1])) : a.data.indexInd == d.length - 2 ? (u.push(d[a.data.indexInd + 1]),
+    //       u.push(d[0])) : (u.push(d[a.data.indexInd + 1]), u.push(d[a.data.indexInd + 2]))) : (0 == a.data.indexInd ? (u.push(d[d.length - 2]),
+    //         u.push(d[d.length - 1])) : 1 == a.data.indexInd ? (u.push(d[d.length - 1]), u.push(d[0])) : (u.push(d[a.data.indexInd - 2]),
+    //           u.push(d[a.data.indexInd - 1])), u.push(d[a.data.indexInd])), this.setData({
+    //             questions: u,
+    //             indexInd: o
+    //           })
+    // getApp().saveInfo("starids",s,d[o].question_id.toString()),setTimeout(function() {
+    //   a.setData({
+    //     starshow:getApp().info
+    //   })
+    // },500)
+    // console.log(u)
   },
   questionStatus: function () {
     var t = this;
@@ -272,35 +281,36 @@ Page({
 
   // 选中选项
   selectAnswer: function (event) {
-    console.log(event);
-    let questionId = event.currentTarget.dataset.id;
-    let answer = event.currentTarget.dataset.answer;
     let option = event.currentTarget.dataset.option;
-    let myAnswer = this.data.myAnswer;
+    let index = event.currentTarget.dataset.index;
+    let questionList = this.data.questionList;
 
     // 还未作答过
-    if (myAnswer[questionId] == '') {
-      myAnswer[questionId] = option;
+    if (questionList[index].myAnswerStatus == 0) {
       let t = this;
-      this.setData({
-        myAnswer
-      }), setTimeout(function () {
-        if (answer == option) {
-          // 跳转下一题
-          t.setData({
-            current: t.data.current + 1,
-            correctNum: t.data.correctNum +1
-          })
-        } else {
-          // 记录错误
-          t.setData({
-            errorNum: t.data.errorNum + 1
-          })
-        }
-      }, 300);
+
+      questionList[index].myAnswer = option;
+      // 作答正确
+      if (questionList[index].answer == option) {
+        questionList[index].myAnswerStatus = 1;
+        this.setData({
+          questionList: questionList,
+          correctNum: t.data.correctNum + 1
+        }, setTimeout(function () {
+            // 跳转下一题
+            t.setData({
+              current: t.data.current + 1, 
+            })
+          }, 500))
+      } else {
+        questionList[index].myAnswerStatus = 2;
+        this.setData({
+          questionList: questionList,
+          errorNum: t.data.errorNum + 1
+        })
+      }
     }
     
-    console.log(this.data.myAnswer);
     
 
     // function a(){
@@ -602,7 +612,7 @@ Page({
       iconIndtwo: !this.data.iconIndtwo
     }), setTimeout(function () {
       t.setData({
-        scrolltop: 100
+        // scrolltop: 200
       })
       // i.length < 2 || t.setData({
       //   scrolltop: i[i.length - 2]
