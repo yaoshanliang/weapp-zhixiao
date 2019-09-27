@@ -31,12 +31,23 @@ Page({
       moduleCode: options.moduleCode,
     }).then((res) => {
       if (res.code == 0) {
+        let history = getValue('history');
+        let current = 0;
+        if (history && history[this.data.moduleCode]) {
+          current = history[this.data.moduleCode].lastIndex;
+          if (current > 0) {
+            this.setData({
+              current,
+              history: 1
+            })
+          }
+        }
         this.setData({
           questionCount: res.data.count,
           questionList: res.data.list,
           myAnswerList: res.data.myAnswerList,
           correctNum: res.data.correctNum,
-          errorNum: res.data.errorNum
+          errorNum: res.data.errorNum,
         }, () => {
           wx.hideLoading();
         })
@@ -135,6 +146,21 @@ Page({
         
       }
     })
+
+    let history = getValue('history');
+    if (history && history[this.data.moduleCode]) {
+      history[this.data.moduleCode].lastIndex = this.data.current;
+      setValue('history', history);
+
+    } else {
+      if (! history) {
+        history = {};
+      }
+      history[this.data.moduleCode] = { 'lastIndex': this.data.current};
+      console.log(history);
+      setValue('history', history);
+
+    }
   }
 
 })

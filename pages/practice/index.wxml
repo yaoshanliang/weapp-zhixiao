@@ -12,7 +12,7 @@
 </view>
 <view style="height: 80rpx;"></view>
 <view style="height:20rpx;background:#f5f6f7"></view>
-<view class="address-green" wx:if="{{recmend}}">已自动回到上次答题的位置</view>
+<view class="address-green" wx:if="{{history}}">已自动回到上次答题的位置</view>
 <import src="../public/moniq/moniq.wxml"></import>
 <view class="page">
   <swiper bindchange="pageChange" circular="{{xiejie}}" class="{{videoMedia&&videoctrl?'flexauto':'noflex'}}" current="{{current}}" duration="500" indicatorDots="{{false}}">
