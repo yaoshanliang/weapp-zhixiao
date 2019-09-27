@@ -8,16 +8,10 @@ export function getQuestions(param) {
   });
 }
 
-export function chooseSubject(param) {
+export function postAnswers(param) {
   return request({
-    url: config.prefix + 'question/chooseSubject',
-    data: param
-  });
-}
-
-export function getMySubject(param) {
-  return request({
-    url: config.prefix + 'question/getMySubject',
+    url: config.prefix + 'question/postAnswers',
+    method: 'POST',
     data: param
   });
 }

@@ -1,9 +1,11 @@
-import { getQuestions } from '../../services/question';
+import { getQuestions, postAnswers } from '../../services/question';
 import { getValue, setValue, addValueFromArray, removeValueFromArray } from '../../utils/common';
 
 Page({
 
   data: {
+    subjectCode: '',
+    moduleCode: '',
     history: 0,
     questionCount: 0,
     questionList: [],
@@ -20,6 +22,10 @@ Page({
     wx.showLoading({
       title: '加载中',
     });
+    this.setData({
+      subjectCode: options.subjectCode,
+      moduleCode: options.moduleCode,
+    })
     getQuestions({
       subjectCode: options.subjectCode,
       moduleCode: options.moduleCode,
@@ -28,19 +34,14 @@ Page({
         this.setData({
           questionCount: res.data.count,
           questionList: res.data.list,
-          myAnswerList: res.data.myAnswerList
+          myAnswerList: res.data.myAnswerList,
+          correctNum: res.data.correctNum,
+          errorNum: res.data.errorNum
+        }, () => {
+          wx.hideLoading();
         })
-        wx.hideLoading();
       }
     })
-  },
-
-  onReady: function () {
-
-  },
-
-  onShow: function () {
-
   },
 
   // 收藏
@@ -51,146 +52,6 @@ Page({
     myAnswerList[index].collect = myAnswerList[index].collect == 1 ? 0 : 1;
     this.setData({
       myAnswerList
-    })
-  },
-
-  init_play: function (a) {
-    var category = wx.getStorageSync('category');
-    s = category.id;
-    var e = this,
-      r = a.mode;
-    this.setData({
-      mode: r
-    }), "2" == e.data.mode ? (n = "randow", wx.setNavigationBarTitle({
-      title: '随机练习',
-    })) : (n = "order", wx.setNavigationBarTitle({
-      title: '顺序练习',
-    }), e.setData({
-      iconcircle: '',
-    })), e.getMsg(r), wx.getStorage({
-      key: n + "list" + s,
-      success: function (t) {
-        console.log(t)
-        e.setData({
-          orderPX: t.data,
-          allNum: t.data.all
-        });
-        var a = 0,
-          r = 0;
-        for (var d in e.data.orderPX) "red" == e.data.orderPX[d] ? (a++ , e.setData({
-          redNum: a
-        })) : "green" == e.data.orderPX[d] && (r++ , e.setData({
-          greenNum: r
-        }));
-      }
-    });
-  },
-  getMsg: function (e) {
-    var r = this;
-    wx.showLoading({
-      title: '加载中',
-    });
-    var category = wx.getStorageSync('category');
-    r.setData({
-      cateName: category.name
-    })
-    wx.getStorage({
-      key: n + "" + s,
-      success: function (t) {
-        r.setData({
-          StorageAll: t.data,
-        });
-
-      },
-      complete: function () {
-        var q = wx.getStorageSync('q_' + s),
-          n = r.data.iconcircle;
-        wx.getStorage({
-          key: 'qid_' + category.id,
-          success: function (qid) {
-            var e = qid.data;
-            "2" == r.data.mode && (n = [{
-              title: '',
-              question_ids: e = a.shuffle(e)
-            }]);
-            console.log(question.questions["question"])
-            for (var i = [], o = 0; o < e.length; o++) i[o] = a.clone(question.questions["question"][e[o]]);
-            console.log(i)
-            for (var o = 0; o < e.length; o++)
-              if (i[o].answerArr = i[o].answer.split(""), r.data.StorageAll[i[o].question_id]) {
-                var u = r.data.StorageAll[i[o].question_id];
-                "1" == u.subup || "0" == u.after ? i[o].order = u : (console.log(), "多选" == i[o].type_name && (i[o].order = {},
-                  i[o].order.subup = 0, i[o].order.down = {
-                    A: !1,
-                    B: !1,
-                    C: !1,
-                    D: !1
-                  }));
-              } else "多选" == i[o].type_name && (i[o].order = {}, i[o].order.subup = 0, i[o].order.down = {
-                A: !1,
-                B: !1,
-                C: !1,
-                D: !1
-              });
-            console.log(i)
-            var iconcircle = [{
-              'title': '试题',
-              'len': 0,
-              'question_count': e.length,
-              'question_ids': e
-            }]
-            console.log(iconcircle)
-            d = i, r.setData({
-              idarr: e,
-              iconcircle: iconcircle
-            }), setTimeout(function () {
-              wx.hideLoading();
-            }, 1e3), r.getthree();
-          },
-        })
-      }
-    })
-  },
-  getthree: function () {
-    var t = this;
-    console.log(n + "ind" + s);
-    wx.getStorage({
-      key: n + "ind" + s,
-      success: function (a) {
-        var e = {
-          currentTarget: {
-            dataset: {
-              index: a.data
-            }
-          }
-        }
-        t.jumpToQuestion(e);
-      },
-      fail: function () {
-        var a = {
-          currentTarget: {
-            dataset: {
-              index: 0
-            }
-          }
-        };
-        t.jumpToQuestion(a);
-      }
-    }), wx.getStorage({
-      key: n + "" + s,
-      success: function (a) {
-        if (a.data) {
-          var e = t.data.orderPX;
-          e[t.data.idarr[a.data]] = 'blue', t.setData({
-            orderPX: e,
-            recmend: !0
-          }), t.questionStatus(), setTimeout(function () {
-            t.setData({
-              recmend: !1
-            });
-          }, 2e3);
-        }
-      }
     })
   },
 
@@ -253,10 +114,27 @@ Page({
     }), setTimeout(function () {
     }, 0);
   },
+
+  // 切换tab
   changeTab: function (event) {
     this.setData({
       questionMode: event.currentTarget.dataset.mode,
     })
   },
+
+  onReady: function () {
+  },
+
+  onUnload() {
+    postAnswers({
+      subjectCode: this.data.subjectCode,
+      moduleCode: this.data.moduleCode,
+      myAnswerList: this.data.myAnswerList
+    }).then((res) => {
+      if (res.code == 0) {
+        
+      }
+    })
+  }
 
 })

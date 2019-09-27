@@ -102,7 +102,7 @@
             <view wx:for="{{myModules}}" wx:key="2">
               <van-collapse-item title="{{item.name}}" name="{{item.name}}">
                 <view wx:for="{{item.list}}" wx:for-item="item2" wx:key="1">
-                  <van-cell title="{{item2.module_name}}" is-link value="1/1000"  url="/pages/practice/index?subjectCode={{item2.subject_code}}&moduleCode={{item2.module_code}}"/>
+                  <van-cell title="{{item2.module_name}}" is-link value="{{item2.done_count}}/{{item2.total_count}}"  url="/pages/practice/index?subjectCode={{item2.subject_code}}&moduleCode={{item2.module_code}}"/>
                 </view>
               </van-collapse-item>
             </view>
