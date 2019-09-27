@@ -17,7 +17,7 @@
 <view class="page">
   <swiper autoplay="{{autoplay}}" bindchange="pageChange" circular="{{xiejie}}" class="{{videoMedia&&videoctrl?'flexauto':'noflex'}}" current="{{current}}" duration="500" indicatorDots="{{false}}" interval="{{interval}}" wx:if="{{!iconIndtwo}}">
     <swiper-item wx:for="{{questionList}}" wx:for-item="question" wx:key="key">
-        <template is="answer" data="{{question:question, questionIndex: index, textTab:textTab,videoctrl:videoctrl,testMode:testMode}}"></template>
+        <template is="answer" data="{{question:question, questionIndex: index, questionMode: questionMode,textTab:textTab,videoctrl:videoctrl,testMode:testMode}}"></template>
     </swiper-item>
   </swiper>
 </view>

@@ -39,7 +39,8 @@ Page({
     // myAnswer: {},
     current: 0,
     correctNum: 0,
-    errorNum: 0
+    errorNum: 0,
+    questionMode: 0
 
   },
 
@@ -621,10 +622,8 @@ Page({
     console.log(this.data.iconInd)
   },
   changeTab: function (t) {
-    var a = this
-    var e = a.data.questions;
-    a.setData({
-      questions: e,
+    this.setData({
+      questionMode: !this.data.questionMode,
       textTab: t.currentTarget.dataset.texttab,
       selectInd: "答题模式" == t.currentTarget.dataset.texttab
     })

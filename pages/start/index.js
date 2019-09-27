@@ -84,7 +84,7 @@ Page({
                   })
                   setValue('userInfo', res.data);
                   setValue('userInfoTimestamp', Date.parse(new Date()) / 1000);
-                  wx.redirectTo({
+                  wx.reLaunch({
                     url: '/pages/home/index',
                   })
                 } else {
@@ -116,7 +116,7 @@ Page({
     wx.showLoading({
       title: '正在加载',
     })
-    wx.redirectTo({
+    wx.reLaunch({
       url: '/pages/home/index',
     })
     // console.log(this.data.checkUser)

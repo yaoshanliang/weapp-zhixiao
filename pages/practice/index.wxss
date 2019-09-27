@@ -515,6 +515,16 @@ page {
     line-height: 25px;
 }
 
+.answer-text {
+    font-size: 32rpx;
+    height: auto;
+    color: #3f3f3f;
+    padding-left: 24rpx;
+    padding-right: 24rpx;
+    padding-bottom: 20rpx;
+    line-height: 25px;
+}
+
 .address-green {
     background: #fcdec6;
     height: 30px;
