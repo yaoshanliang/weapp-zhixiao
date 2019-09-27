@@ -1,7 +1,7 @@
 <template name="answer">
-  <view class="all-wrap" wx:if="{{!iconInd}}">
+  <view class="all-wrap">
     <scroll-view scrollY style="height:100%;">
-      <view bindtouchend="bindtouchend" bindtouchmove="bindtouchmove" bindtouchstart="touchstart" class="answer-wrap">
+      <view class="answer-wrap">
         <view class="answer-title">
           <view style="width:100%">
             <view class="tag">{{question.type}}</view>
@@ -20,9 +20,9 @@
             </view>
 
             <view class="answer-left" wx:if="{{! questionMode}}">
-              <text class="option" wx:if="{{ question.myAnswerStatus == 0 || (question.answer != option.key && question.myAnswer != option.key) }}">{{option.key}}</text>
-              <image src="/images/error.png" wx:if="{{ question.myAnswerStatus == 2 && question.myAnswer == option.key }}"></image>
-              <image src="/images/success.png" wx:if="{{ question.myAnswerStatus != 0 && question.answer == option.key }}"></image>
+              <text class="option" wx:if="{{ myAnswer.status == 0 || (question.answer != option.key && myAnswer.answer != option.key) }}">{{option.key}}</text>
+              <image src="/images/error.png" wx:if="{{ myAnswer.status == 2 && myAnswer.answer == option.key }}"></image>
+              <image src="/images/success.png" wx:if="{{ myAnswer.status != 0 && question.answer == option.key }}"></image>
             </view>
 
             <view class="answer-right" wx:if="{{questionMode}}">
@@ -31,13 +31,13 @@
             </view>
 
             <view class="answer-right" wx:if="{{! questionMode}}">
-              <text class="text" wx:if="{{ question.myAnswerStatus == 0 || (question.answer != option.key && question.myAnswer != option.key) }}">{{option.value}}</text>
-              <text class="red-active" wx:if="{{ question.myAnswerStatus == 2 && question.myAnswer == option.key }}">{{option.value}}</text>
-              <text class="green-active" wx:if="{{ question.myAnswerStatus != 0 && question.answer == option.key }}">{{option.value}}</text>
+              <text class="text" wx:if="{{ myAnswer.status == 0 || (question.answer != option.key && myAnswer.answer != option.key) }}">{{option.value}}</text>
+              <text class="red-active" wx:if="{{ myAnswer.status == 2 && myAnswer.answer == option.key }}">{{option.value}}</text>
+              <text class="green-active" wx:if="{{ myAnswer.status != 0 && question.answer == option.key }}">{{option.value}}</text>
             </view>
           </view>
         </view>
-        <view class="explantion" wx:if="{{questionMode || question.myAnswerStatus != 0}}">
+        <view class="explantion" wx:if="{{questionMode || myAnswer.status != 0}}">
           <view class="explanation-title">
             <view class="explanation-left">解释</view>
           </view>

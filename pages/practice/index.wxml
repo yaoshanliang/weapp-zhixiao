@@ -1,12 +1,12 @@
 <view class="tab-wrap">
     <view class="tab">
-        <view bindtap="changeTab" data-textTab="答题模式">
-            <text class="{{selectInd?'blue':''}}">答题模式</text>
-            <span class="{{selectInd?'span':''}}"></span>
+        <view bindtap="changeTab" data-mode="{{ 0 }}">
+            <text class="{{questionMode == 0 ?'blue':''}}">答题模式</text>
+            <span class="{{questionMode == 0 ? 'span':''}}"></span>
         </view>
-        <view bindtap="changeTab" data-textTab="背题模式">
-            <text class="{{!selectInd?'blue':''}}">背题模式</text>
-            <span class="{{!selectInd?'span':''}}"></span>
+        <view bindtap="changeTab" data-mode="{{ 1 }}">
+            <text class="{{questionMode == 1 ?'blue':''}}">背题模式</text>
+            <span class="{{questionMode == 1 ?'span':''}}"></span>
         </view>
     </view>
 </view>
@@ -15,16 +15,16 @@
 <view class="address-green" wx:if="{{recmend}}">已自动回到上次答题的位置</view>
 <import src="../public/moniq/moniq.wxml"></import>
 <view class="page">
-  <swiper autoplay="{{autoplay}}" bindchange="pageChange" circular="{{xiejie}}" class="{{videoMedia&&videoctrl?'flexauto':'noflex'}}" current="{{current}}" duration="500" indicatorDots="{{false}}" interval="{{interval}}" wx:if="{{!iconIndtwo}}">
+  <swiper bindchange="pageChange" circular="{{xiejie}}" class="{{videoMedia&&videoctrl?'flexauto':'noflex'}}" current="{{current}}" duration="500" indicatorDots="{{false}}">
     <swiper-item wx:for="{{questionList}}" wx:for-item="question" wx:key="key">
-        <template is="answer" data="{{question:question, questionIndex: index, questionMode: questionMode,textTab:textTab,videoctrl:videoctrl,testMode:testMode}}"></template>
+        <template is="answer" data="{{question:question, questionIndex: index, questionMode: questionMode,myAnswer: myAnswerList[index]}}"></template>
     </swiper-item>
   </swiper>
 </view>
-<view bindtap="_updown" class="footer-mark" wx:if="{{iconInd}}"></view>
-<view class="footer {{iconInd?'test-one':'test-active'}}">
+<view bindtap="pannel" class="footer-mark" wx:if="{{pannelUp}}"></view>
+<view class="footer {{pannelUp?'test-one':'test-active'}}">
     <view class="header">
-        <view bindtap="_updown" class="h-left">
+        <view bindtap="pannel" class="h-left">
             <view>
                 <image src="/images/q_answer_sheet_right.png"></image>
                 <text style="color:#33c500">{{correctNum}}</text>
@@ -38,23 +38,23 @@
                 <text>{{current+1}} / {{questionCount}}</text>
             </view>
         </view>
-        <view bindtap="starcollect" class="h-right" wx:if="{{!iconInd}}">
-            <image src="/images/nav_test_icon_fav.png" wx:if="{{!starshow}}"></image>
-            <image src="/images/star-active.png" wx:if="{{starshow}}"></image>
+        <view bindtap="collect" data-index="{{ current }}" class="h-right" wx:if="{{!pannelUp}}">
+            <image src="/images/nav_test_icon_fav.png" wx:if="{{ !myAnswerList[current]['collect'] }}"></image>
+            <image src="/images/star-active.png" wx:if="{{ myAnswerList[current]['collect'] }}"></image>
             <text>收藏</text>
         </view>
-        <view bindtap="del_data" class="h-right" wx:if="{{iconInd}}">
+        <view bindtap="del_data" class="h-right" wx:if="{{pannelUp}}">
             <text>清空记录</text>
         </view>
     </view>
-    <view bindtouchmove="scrolltop" class="{{iconInd?'wrap-icon-active':'wrap-icon'}}">
-        <scroll-view scrollY bindscroll="viewscroll" scrollTop="{{scrolltop}}" style="height: 100%">
-            <view class="icon-circle {{iconInd?'showzh-active':'showzh'}}" wx:if="{{iconInd}}" wx:for="{{questionList}}" wx:key="key">
+    <view bindtouchmove="scrolltop" class="{{pannelUp?'wrap-icon-active':'wrap-icon'}}">
+        <scroll-view scrollY  scrollTop="{{scrolltop}}" style="height: 100%">
+            <view class="icon-circle {{pannelUp?'showzh-active':'showzh'}}" wx:if="{{pannelUp}}" wx:for="{{questionList}}" wx:key="key">
                 <view class="circle-wrap">
                     <view bindtap="jumpToQuestion" data-index="{{index}}">
-                        <view class="now" wx:if="{{current != index && item['myAnswerStatus'] == 0}}">{{index + 1}}</view>
-                        <view class="red" wx:if="{{current != index && item['myAnswerStatus'] == 2}}">{{index + 1}}</view>
-                        <view class="green" wx:if="{{current != index && item['myAnswerStatus'] == 1}}">{{index + 1}}</view>
+                        <view class="now" wx:if="{{current != index && myAnswerList[index]['status'] == 0}}">{{index + 1}}</view>
+                        <view class="red" wx:if="{{current != index && myAnswerList[index]['status'] == 2}}">{{index + 1}}</view>
+                        <view class="green" wx:if="{{current != index && myAnswerList[index]['status'] == 1}}">{{index + 1}}</view>
                         <view class="blue" wx:if="{{current == index}}">{{index + 1}}</view>
                     </view>
                 </view>
