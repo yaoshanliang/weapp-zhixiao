@@ -77,7 +77,12 @@ Page({
   },
   goToPractice: function (t) {
     wx.navigateTo({
-      url: '/pages/practice/index?subjectCode=' + this.data.subjectCode + '&moduleCode=all'
+      url: '/pages/practice/index?subjectCode=' + this.data.subjectCode + '&type=all'
+    })
+  },
+  goToRandomPractice: function (t) {
+    wx.navigateTo({
+      url: '/pages/practice/index?subjectCode=' + this.data.subjectCode + '&type=random'
     })
   },
   goToExam: function (t) {

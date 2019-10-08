@@ -3,7 +3,7 @@
         <view class="question-wrap">
             <view class="question">
                 <view class="left">
-                    <view bindtap="orderGo" class="home-icon" data-mode="2">
+                    <view bindtap="goToRandomPractice" class="home-icon" data-mode="2">
                         <form bindsubmit="formSubmit_random" reportSubmit="true">
                             <button class="home-icon" formType="submit">
                                 <image mode="aspectFit" src="/images/sjlx.png"></image>
