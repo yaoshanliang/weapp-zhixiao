@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var component_1 = require("../common/component");
 var touch_1 = require("../mixins/touch");
+var utils_1 = require("../common/utils");
 component_1.VantComponent({
     mixins: [touch_1.touch],
     classes: ['nav-class', 'tab-class', 'tab-active-class', 'line-class'],
@@ -98,6 +99,7 @@ component_1.VantComponent({
         });
     },
     destroyed: function () {
+        // @ts-ignore
         this.createIntersectionObserver().disconnect();
     },
     methods: {
@@ -183,7 +185,7 @@ component_1.VantComponent({
                     item.set(data);
                 }
             });
-            this.set({}, function () {
+            utils_1.nextTick(function () {
                 _this.setLine();
                 _this.setTrack();
                 _this.scrollIntoView();
@@ -261,7 +263,9 @@ component_1.VantComponent({
             }
             var offsetTop = this.data.offsetTop;
             var windowHeight = wx.getSystemInfoSync().windowHeight;
+            // @ts-ignore
             this.createIntersectionObserver().disconnect();
+            // @ts-ignore
             this.createIntersectionObserver()
                 .relativeToViewport({ top: -(this.navHeight + offsetTop) })
                 .observe('.van-tabs', function (res) {
@@ -276,6 +280,7 @@ component_1.VantComponent({
                 });
                 _this.setPosition(position);
             });
+            // @ts-ignore
             this.createIntersectionObserver()
                 .relativeToViewport({ bottom: -(windowHeight - 1 - offsetTop) })
                 .observe('.van-tabs', function (res) {

@@ -12,7 +12,7 @@
           <image mode="aspectFit" src="{{downContent.media}}" wx:if="{{downContent.media_type=='1'}}"></image>
         </view>
         <view class="answer-select">
-          <view bindtap="selectAnswer" class="direction" data-index="{{questionIndex}}" data-answer="{{question.answer}}" data-id="{{question.id}}" data-option="{{option.key}}" wx:for="{{question.options}}" wx:for-index="index" wx:for-item="option" wx:key="index">
+          <view bindtap="selectAnswer" class="direction" data-index="{{questionIndex}}" data-answer="{{question.answer}}" data-id="{{question.id}}" data-option="{{option.key}}" data-moduleCode="{{question.module_code}}" wx:for="{{question.options}}" wx:for-index="index" wx:for-item="option" wx:key="index">
 
             <view class="answer-left" wx:if="{{questionMode}}">
               <text class="option" wx:if="{{ question.answer != option.key}}">{{option.key}}</text>

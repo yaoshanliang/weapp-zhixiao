@@ -6,6 +6,7 @@ import { getMySubject } from '../../services/subject';
 Page({
   data: {
     activeCollapse: [],
+    subjectCode: '',
     mySubject: '',
     myModules: []
   },
@@ -55,8 +56,11 @@ Page({
         activeCollapse.push(item.name);
       })
       this.setData({
+        subjectCode: res.data.subject_code,
         mySubject: res.data.subject_name,
         myModules: res.data.modules,
+        totalCount: res.data.totalCount,
+        doneCount: res.data.doneCount,
         activeCollapse
       })
     })
@@ -73,7 +77,7 @@ Page({
   },
   goToPractice: function (t) {
     wx.navigateTo({
-      url: '/pages/practice/index',
+      url: '/pages/practice/index?subjectCode=' + this.data.subjectCode + '&moduleCode=all'
     })
   },
   goToExam: function (t) {

@@ -1,4 +1,4 @@
-import { getQuestions, postAnswers } from '../../services/question';
+import { getQuestions, postAnswer, postCollect, postAnswers } from '../../services/question';
 import { getValue, setValue, addValueFromArray, removeValueFromArray } from '../../utils/common';
 
 Page({
@@ -19,29 +19,38 @@ Page({
 
   onLoad: function (options) {
     console.log(options);
+    let t = this;
     wx.showLoading({
       title: '加载中',
     });
     this.setData({
       subjectCode: options.subjectCode,
-      moduleCode: options.moduleCode,
+      // moduleCode: options.moduleCode,
     })
     getQuestions({
       subjectCode: options.subjectCode,
-      moduleCode: options.moduleCode,
+      moduleCode: options.moduleCode ? options.moduleCode : '',
     }).then((res) => {
       if (res.code == 0) {
-        let history = getValue('history');
-        let current = 0;
-        if (history && history[this.data.moduleCode]) {
-          current = history[this.data.moduleCode].lastIndex;
-          if (current > 0) {
-            this.setData({
-              current,
-              history: 1
-            })
-          }
-        }
+        // let history = getValue('history');
+        // let current = 0;
+        // if (history && history[this.data.moduleCode]) {
+        //   current = history[this.data.moduleCode].lastIndex;
+        //   if (current > 0) {
+        //     this.setData({
+        //       current,
+        //       history: 1
+        //     })
+        //     this.setData({
+        //       current,
+        //       history: 1
+        //     }, setTimeout(function () {
+        //       t.setData({
+        //         history: 0,
+        //       })
+        //     }, 2000))
+        //   }
+        // }
         this.setData({
           questionCount: res.data.count,
           questionList: res.data.list,
@@ -60,9 +69,21 @@ Page({
     let index = event.currentTarget.dataset.index;
 
     let myAnswerList = this.data.myAnswerList;
+    let questionList = this.data.questionList;
     myAnswerList[index].collect = myAnswerList[index].collect == 1 ? 0 : 1;
     this.setData({
       myAnswerList
+    })
+
+    postCollect({
+      subjectCode: this.data.subjectCode,
+      moduleCode: questionList[index].module_code,
+      questionId: questionList[index].id,
+      collect: myAnswerList[index].collect,
+    }).then((res) => {
+      if (res.code == 0) {
+
+      }
     })
   },
 
@@ -107,6 +128,19 @@ Page({
           errorNum: t.data.errorNum + 1
         })
       }
+
+      // 保存答案
+      postAnswer({
+        subjectCode: this.data.subjectCode,
+        moduleCode: event.currentTarget.dataset.modulecode,
+        questionId: event.currentTarget.dataset.id,
+        answer: event.currentTarget.dataset.option,
+        status: myAnswerList[index].status,
+      }).then((res) => {
+        if (res.code == 0) {
+
+        }
+      })
     }
   },
 
@@ -133,34 +167,31 @@ Page({
     })
   },
 
-  onReady: function () {
-  },
+  // onUnload() {
+  //   postAnswers({
+  //     subjectCode: this.data.subjectCode,
+  //     moduleCode: this.data.moduleCode,
+  //     myAnswerList: this.data.myAnswerList
+  //   }).then((res) => {
+  //     if (res.code == 0) {
 
-  onUnload() {
-    postAnswers({
-      subjectCode: this.data.subjectCode,
-      moduleCode: this.data.moduleCode,
-      myAnswerList: this.data.myAnswerList
-    }).then((res) => {
-      if (res.code == 0) {
-        
-      }
-    })
+  //     }
+  //   })
 
-    let history = getValue('history');
-    if (history && history[this.data.moduleCode]) {
-      history[this.data.moduleCode].lastIndex = this.data.current;
-      setValue('history', history);
+  //   let history = getValue('history');
+  //   if (history && history[this.data.moduleCode]) {
+  //     history[this.data.moduleCode].lastIndex = this.data.current;
+  //     setValue('history', history);
 
-    } else {
-      if (! history) {
-        history = {};
-      }
-      history[this.data.moduleCode] = { 'lastIndex': this.data.current};
-      console.log(history);
-      setValue('history', history);
+  //   } else {
+  //     if (!history) {
+  //       history = {};
+  //     }
+  //     history[this.data.moduleCode] = { 'lastIndex': this.data.current };
+  //     console.log(history);
+  //     setValue('history', history);
 
-    }
-  }
+  //   }
+  // }
 
 })

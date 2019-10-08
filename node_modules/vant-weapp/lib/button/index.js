@@ -7,6 +7,8 @@ component_1.VantComponent({
     mixins: [button_1.button, open_type_1.openType],
     classes: ['hover-class', 'loading-class'],
     props: {
+        icon: String,
+        color: String,
         plain: Boolean,
         block: Boolean,
         round: Boolean,

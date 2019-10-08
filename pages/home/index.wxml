@@ -18,7 +18,7 @@
                             <view class="progress-bg">
                                 <view class="progress-wrap">
                                     <view class="progress-title">顺序练习</view>
-                                    <text>{{afternum}}/{{questionnum}}</text>
+                                    <text>{{doneCount}} / {{totalCount}}</text>
                                 </view>
                                 <image mode="widthFix" src="/images/green.png"></image>
                             </view>

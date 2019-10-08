@@ -10,11 +10,13 @@ export const transition = function (showDefaultValue) {
     return Behavior({
         properties: {
             customStyle: String,
+            // @ts-ignore
             show: {
                 type: Boolean,
                 value: showDefaultValue,
                 observer: 'observeShow'
             },
+            // @ts-ignore
             duration: {
                 type: [Number, Object],
                 value: 300,
@@ -22,15 +24,13 @@ export const transition = function (showDefaultValue) {
             },
             name: {
                 type: String,
-                value: 'fade',
-                observer: 'updateClasses'
+                value: 'fade'
             }
         },
         data: {
             type: '',
             inited: false,
-            display: false,
-            classNames: getClassNames('fade')
+            display: false
         },
         attached() {
             if (this.data.show) {
@@ -46,14 +46,10 @@ export const transition = function (showDefaultValue) {
                     this.leave();
                 }
             },
-            updateClasses(name) {
-                this.set({
-                    classNames: getClassNames(name)
-                });
-            },
             enter() {
-                const { classNames, duration } = this.data;
-                const currentDuration = isObj(duration) ? duration.leave : duration;
+                const { duration, name } = this.data;
+                const classNames = getClassNames(name);
+                const currentDuration = isObj(duration) ? duration.enter : duration;
                 this.status = 'enter';
                 Promise.resolve()
                     .then(nextTick)
@@ -76,7 +72,8 @@ export const transition = function (showDefaultValue) {
                     .catch(() => { });
             },
             leave() {
-                const { classNames, duration } = this.data;
+                const { duration, name } = this.data;
+                const classNames = getClassNames(name);
                 const currentDuration = isObj(duration) ? duration.leave : duration;
                 this.status = 'leave';
                 Promise.resolve()
