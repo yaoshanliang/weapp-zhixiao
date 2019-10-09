@@ -96,9 +96,14 @@ Page({
       url: '/pages/practice/index?type=collect&subjectCode=' + this.data.subjectCode
     })
   },
+  goToHistory: function (t) {
+    wx.navigateTo({
+      url: '/pages/practice/index?type=history&subjectCode=' + this.data.subjectCode
+    })
+  },
   goToExam: function (t) {
     wx.navigateTo({
-      url: '/pages/exam/index',
+      url: '/pages/practice/index?type=random&subjectCode=' + this.data.subjectCode
     })
   },
   

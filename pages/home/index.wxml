@@ -43,16 +43,16 @@
         <view class="question-wrap">
             <view class="question">
                 <view class="left">
-                    <view bindtap="headerMenu" class="home-icon">
+                    <view bindtap="goToHistory" class="home-icon">
                         <form bindsubmit="formSubmit_rank" reportSubmit="true">
                             <button class="home-icon" formType="submit">
                                 <image mode="aspectFit" src="/images/zxlx.png"></image>
-                                <text>成绩排名</text>
+                                <text>练习历史</text>
                             </button>
                         </form>
                     </view>
                 </view>
-                <view bindtap="examGo" class="center">
+                <view bindtap="goToExam" class="center">
                     <form bindsubmit="formSubmit_exam" reportSubmit="true">
                         <button formType="submit">
                             <view class="progress-bg">
