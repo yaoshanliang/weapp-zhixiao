@@ -4,6 +4,7 @@ import { getValue, setValue, addValueFromArray, removeValueFromArray } from '../
 Page({
 
   data: {
+    loading: 0,
     subjectCode: '',
     moduleCode: '',
     history: 0,
@@ -25,7 +26,9 @@ Page({
     });
     this.setData({
       subjectCode: options.subjectCode,
-      // moduleCode: options.moduleCode,
+      moduleCode: options.moduleCode,
+      type: options.type,
+      loading: 1,
     })
     getQuestions({
       subjectCode: options.subjectCode,
@@ -33,31 +36,13 @@ Page({
       type: options.type ? options.type : '',
     }).then((res) => {
       if (res.code == 0) {
-        // let history = getValue('history');
-        // let current = 0;
-        // if (history && history[this.data.moduleCode]) {
-        //   current = history[this.data.moduleCode].lastIndex;
-        //   if (current > 0) {
-        //     this.setData({
-        //       current,
-        //       history: 1
-        //     })
-        //     this.setData({
-        //       current,
-        //       history: 1
-        //     }, setTimeout(function () {
-        //       t.setData({
-        //         history: 0,
-        //       })
-        //     }, 2000))
-        //   }
-        // }
         this.setData({
-          questionCount: res.data.count,
+          questionCount: res.data.list.length,
           questionList: res.data.list,
           myAnswerList: res.data.myAnswerList,
           correctNum: res.data.correctNum,
           errorNum: res.data.errorNum,
+          loading: 0,
         }, () => {
           wx.hideLoading();
         })
@@ -168,31 +153,22 @@ Page({
     })
   },
 
-  // onUnload() {
-  //   postAnswers({
-  //     subjectCode: this.data.subjectCode,
-  //     moduleCode: this.data.moduleCode,
-  //     myAnswerList: this.data.myAnswerList
-  //   }).then((res) => {
-  //     if (res.code == 0) {
+  loadMorePractice: function (t) {
+    wx.navigateTo({
+      url: '/pages/practice/index?type=' + this.data.type + '&subjectCode=' + this.data.subjectCode + '&moduleCode=' + this.data.moduleCode
+    })
+  },
 
-  //     }
-  //   })
+  goToPractice: function (t) {
+    wx.navigateTo({
+      url: '/pages/practice/index?type=all&subjectCode=' + this.data.subjectCode
+    })
+  },
 
-  //   let history = getValue('history');
-  //   if (history && history[this.data.moduleCode]) {
-  //     history[this.data.moduleCode].lastIndex = this.data.current;
-  //     setValue('history', history);
-
-  //   } else {
-  //     if (!history) {
-  //       history = {};
-  //     }
-  //     history[this.data.moduleCode] = { 'lastIndex': this.data.current };
-  //     console.log(history);
-  //     setValue('history', history);
-
-  //   }
-  // }
+  goToHome: function (t) {
+    wx.switchTab({
+      url: '/pages/home/index',
+    })
+  },
 
 })

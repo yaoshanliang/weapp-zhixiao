@@ -13,4 +13,5 @@
   font-size: 14px;
   line-height: 22px;
   color: #262626;
+  padding-top: 10px;
 }

@@ -1,8 +1,11 @@
 <view class="main">
-<view class="title">关于
+<view class="title">知晓学堂
 </view>
 <view class="description">
-小程序开箱即用框架
-https://github.com/yaoshanliang/weapp
+答题小程序，包含模块练习、随机联系、错题、收藏、历史练习等功能。
+后台可增加不同学习模块、考试类型、导入题库。
+</view>
+<view class="description">
+https://github.com/yaoshanliang/weapp-zhixiao
 </view>
 </view>
