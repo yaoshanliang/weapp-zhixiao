@@ -30,6 +30,7 @@ Page({
     getQuestions({
       subjectCode: options.subjectCode,
       moduleCode: options.moduleCode ? options.moduleCode : '',
+      type: options.type ? options.type : '',
     }).then((res) => {
       if (res.code == 0) {
         // let history = getValue('history');

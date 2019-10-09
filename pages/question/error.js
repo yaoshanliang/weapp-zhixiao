@@ -1,14 +1,12 @@
-import { config } from '../../utils/config';
+
 import { getUserId, setValue, getValue } from '../../utils/common';
-import { login } from '../../services/user';
-import { getMySubject } from '../../services/subject';
+import { getErrorQuestions } from '../../services/question';
 
 Page({
   data: {
     activeCollapse: [],
     subjectCode: '',
-    mySubject: '',
-    myModules: []
+    questionList: [],
   },
   onLoad(options) {
     var t = this;
@@ -21,7 +19,7 @@ Page({
             success: function (res) {
               console.log(res);
               if (res.code) {
-                login({ code: res.code, ...userInfo}).then((res) => {
+                login({ code: res.code, ...userInfo }).then((res) => {
                   if (res.code === 0) {
                     setValue('userInfo', res.data);
                     setValue('userInfoTimestamp', Date.parse(new Date()) / 1000);
@@ -49,7 +47,7 @@ Page({
       })
     }
   },
-  onShow(){
+  onShow() {
     getMySubject().then((res) => {
       let activeCollapse = [];
       res.data.modules.map((item) => {
@@ -61,7 +59,6 @@ Page({
         myModules: res.data.modules,
         totalCount: res.data.totalCount,
         doneCount: res.data.doneCount,
-        errorCount: res.data.errorCount,
         activeCollapse
       })
     })
@@ -78,22 +75,12 @@ Page({
   },
   goToPractice: function (t) {
     wx.navigateTo({
-      url: '/pages/practice/index?type=all&subjectCode=' + this.data.subjectCode
+      url: '/pages/practice/index?subjectCode=' + this.data.subjectCode + '&type=all'
     })
   },
   goToRandomPractice: function (t) {
     wx.navigateTo({
-      url: '/pages/practice/index?type=random&subjectCode=' + this.data.subjectCode
-    })
-  },
-  goToError: function (t) {
-    wx.navigateTo({
-      url: '/pages/practice/index?type=error&subjectCode=' + this.data.subjectCode
-    })
-  },
-  goToCollect: function (t) {
-    wx.navigateTo({
-      url: '/pages/practice/index?type=collect&subjectCode=' + this.data.subjectCode
+      url: '/pages/practice/index?subjectCode=' + this.data.subjectCode + '&type=random'
     })
   },
   goToExam: function (t) {
@@ -101,5 +88,5 @@ Page({
       url: '/pages/exam/index',
     })
   },
-  
+
 });

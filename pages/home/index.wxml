@@ -26,12 +26,12 @@
                     </form>
                 </view>
                 <view class="right">
-                    <view bindtap="defaultGo" class="home-icon" data-ind="0">
+                    <view bindtap="goToError" class="home-icon" data-ind="0">
                         <form bindsubmit="formSubmit_error" reportSubmit="true">
                             <button class="home-icon" formType="submit">
                                 <image mode="aspectFit" src="/images/wdct.png"></image>
-                                <view class="ct-num" wx:if="{{ctNum>0}}">{{ctNum<=99?ctNum:99}}<text class="ct-num-icon" wx:if="{{ctNum>99}}">+</text>
-                                    <text style="padding-right:5rpx" wx:if="{{ctNum>99}}"></text>
+                                <view class="ct-num" wx:if="{{errorCount>0}}">{{errorCount<=99?errorCount:'99+'}}<text class="ct-num-icon" wx:if="{{errorCount>99}}">+</text>
+                                    <text style="padding-right:5rpx" wx:if="{{errorCount>99}}"></text>
                                 </view>
                                 <text>我的错题</text>
                             </button>
@@ -66,7 +66,7 @@
                     </form>
                 </view>
                 <view class="right">
-                    <view bindtap="defaultGo" class="home-icon" data-ind="1">
+                    <view bindtap="goToCollect" class="home-icon" data-ind="1">
                         <form bindsubmit="formSubmit_grade" reportSubmit="true">
                             <button class="home-icon" formType="submit">
                                 <image mode="aspectFit" src="/images/wdsc.png"></image>
@@ -102,7 +102,7 @@
             <view wx:for="{{myModules}}" wx:key="2">
               <van-collapse-item title="{{item.name}}" name="{{item.name}}">
                 <view wx:for="{{item.list}}" wx:for-item="item2" wx:key="1">
-                  <van-cell title="{{item2.module_name}}" is-link value="{{item2.done_count}}/{{item2.total_count}}"  url="/pages/practice/index?subjectCode={{item2.subject_code}}&moduleCode={{item2.module_code}}"/>
+                  <van-cell title="{{item2.module_name}}" is-link value="{{item2.done_count}}/{{item2.total_count}}"  url="/pages/practice/index?type=module&subjectCode={{item2.subject_code}}&moduleCode={{item2.module_code}}"/>
                 </view>
               </van-collapse-item>
             </view>

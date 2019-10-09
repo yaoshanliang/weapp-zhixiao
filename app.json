@@ -9,7 +9,9 @@
     "pages/about/index",
     "pages/subject/index",
     "pages/exam/index",
-    "pages/practice/index"
+    "pages/practice/index",
+    "pages/question/error",
+    "pages/question/collect"
   ],
   "window": {
     "navigationBarTitleText": "知晓学堂",
