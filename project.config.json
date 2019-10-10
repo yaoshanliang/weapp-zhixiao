@@ -41,7 +41,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 8,
+			"current": 9,
 			"list": [
 				{
 					"id": -1,
@@ -103,6 +103,13 @@
 					"id": 8,
 					"name": "pages/question/error",
 					"pathName": "pages/question/error",
+					"query": "type=error&subjectCode=jssgwy",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/start/index",
+					"pathName": "pages/start/index",
 					"query": "type=error&subjectCode=jssgwy",
 					"scene": null
 				}

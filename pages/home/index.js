@@ -21,7 +21,7 @@ Page({
             success: function (res) {
               console.log(res);
               if (res.code) {
-                login({ code: res.code, ...userInfo}).then((res) => {
+                login({ code: res.code, ...userInfo }).then((res) => {
                   if (res.code === 0) {
                     setValue('userInfo', res.data);
                     setValue('userInfoTimestamp', Date.parse(new Date()) / 1000);
@@ -42,14 +42,14 @@ Page({
           });
         },
         fail: function (res) {
-          wx.redirectTo({
-            url: '/pages/authorize/index',
-          })
+          // wx.redirectTo({
+          //   url: '/pages/authorize/index',
+          // })
         }
       })
     }
   },
-  onShow(){
+  onShow() {
     getMySubject().then((res) => {
       let activeCollapse = [];
       res.data.modules.map((item) => {
@@ -71,40 +71,55 @@ Page({
       activeCollapse: event.detail
     });
   },
+  checkLogin() {
+    if (getUserId() == '') {
+      wx.navigateTo({
+        url: '/pages/start/index',
+      })
+      return;
+    }
+  },
   goToSubject: function () {
+    this.checkLogin();
     wx.navigateTo({
       url: "/pages/subject/index"
     });
   },
   goToPractice: function (t) {
+    this.checkLogin();
     wx.navigateTo({
       url: '/pages/practice/index?type=all&subjectCode=' + this.data.subjectCode
     })
   },
   goToRandomPractice: function (t) {
+    this.checkLogin();
     wx.navigateTo({
       url: '/pages/practice/index?type=random&subjectCode=' + this.data.subjectCode
     })
   },
   goToError: function (t) {
+    this.checkLogin();
     wx.navigateTo({
       url: '/pages/practice/index?type=error&subjectCode=' + this.data.subjectCode
     })
   },
   goToCollect: function (t) {
+    this.checkLogin();
     wx.navigateTo({
       url: '/pages/practice/index?type=collect&subjectCode=' + this.data.subjectCode
     })
   },
   goToHistory: function (t) {
+    this.checkLogin();
     wx.navigateTo({
       url: '/pages/practice/index?type=history&subjectCode=' + this.data.subjectCode
     })
   },
   goToExam: function (t) {
+    this.checkLogin();
     wx.navigateTo({
       url: '/pages/practice/index?type=random&subjectCode=' + this.data.subjectCode
     })
   },
-  
+
 });
